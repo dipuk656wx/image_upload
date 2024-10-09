@@ -50,7 +50,8 @@ def list_images():
 @app.route('/download/<filename>')
 def download_image(filename):
     # Generate a download link for the image
-    file_url = s3.generate_presigned_url('get_object', Params={'Bucket': BucketName, 'Key': filename}, ExpiresIn=100)
+    file_url = s3.generate_presigned_url('get_object', Params={'Bucket': BucketName, 'Key': filename}, ExpiresIn=3600)
+    print(file_url)
     return redirect(file_url)
 
 if __name__ == '__main__':
