@@ -8,6 +8,11 @@
     <h1>Upload Image</h1>
     <form method="POST" action="{{ url_for('upload_image') }}" enctype="multipart/form-data">
         <input type="file" name="file" required>
+        <div>
+            <label>
+                <input type="checkbox" name="encrypt"> Encrypt images while uploading
+            </label>
+        </div>
         <button type="submit">Upload</button>
     </form>
     <a href="{{ url_for('list_images') }}">View Images</a>

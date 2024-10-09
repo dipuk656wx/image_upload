@@ -1,18 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List Images</title>
 </head>
 <body>
-    <h1>Images</h1>
+    <h1>Uploaded Images</h1>
+    <form method="GET" action="{{ url_for('list_images') }}">
+        <label>
+            <input type="checkbox" name="encrypted" {% if show_encrypted %}checked{% endif %}> Show only encrypted images
+        </label>
+        <button type="submit">Filter</button>
+    </form>
     <ul>
         {% for image in images %}
-        <li>
-            <a href="{{ url_for('download_image', filename=image['Key']) }}">{{ image['Key'] }}</a>
-        </li>
+            <li>
+                <form method="POST" action="{{ url_for('download_image', filename=image['Key']) }}">
+                    <span>{{ image['Key'].split('/')[-1] }}</span>
+                    <button type="submit" name="download_type" value="encrypted">Download Encrypted</button>
+                    <input type="hidden" name="decryption_key" placeholder="Decryption key" value="your-key-here" required>
+                    <button type="submit" name="download_type" value="decrypted">Decrypt and Download</button>
+                </form>
+            </li>
         {% endfor %}
     </ul>
+    <a href="{{ url_for('home') }}">Upload More Images</a>
 </body>
 </html>
